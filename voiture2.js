@@ -1,54 +1,76 @@
 const voiture = document.getElementById('voiture');
 
 const canvas = [
-    ["X","D", " ", " ", " ", " ", " ", " ", " ", " "],
-    ["X", "", "p", "p", "p", " ", "p", "p", "p", " "],
-    ["X", "", "p", "p", "p", " ", "p", "p", "p", " "],
-    ["X", "", "p", "p", "p", " ", "p", "p", "p", " "],
-    ["X"," ", " ", " ", " ", " ", " ", " ", " ", " "],
-    ["X", "", "p", "p", "p", " ", "p", "p", "p", " "],
-    ["X", "", "p", "p", "p", " ", "p", "p", "p", " "],
-    ["X", "", "p", "p", "p", " ", "p", "p", "p", " "],
-    ["X"," ", " ", " ", " ", " ", " ", " ", " ", " "],
+    ["X","X", "X", "X", "X", "X", "X", "X", "X", "X", "X"],
+    ["X","D", " ", " ", " ", " ", " ", " ", " ", " ", "X"],
+    ["X", "", "p", "p", "p", " ", "p", "p", "p", " ", "X"],
+    ["X", "", "p", "p", "p", " ", "p", "p", "p", " ", "X"],
+    ["X", "", "p", "p", "p", " ", "p", "p", "p", " ", "X"],
+    ["X"," ", " ", " ", " ", " ", " ", " ", " ", " ", "X"],
+    ["X", "", "p", "p", "p", " ", "p", "p", "p", " ", "X"],
+    ["X", "", "p", "p", "p", " ", "p", "p", "p", " ", "X"],
+    ["X", "", "p", "p", "p", " ", "p", "p", "p", " ", "X"],
+    ["X"," ", " ", " ", " ", " ", " ", " ", " ", " ", "X"],
+    ["X","X", "X", "X", "X", "X", "X", "X", "X", "X", "X"],
 ];
 
-var position = {x: 1, y: 0};
+// x = line, y = column on the canvas
+var position = {x: 1, y: 1};
 
-console.log(position.x)
-console.log(canvas.length)
-console.log(canvas[0].length)
-
-// function moveRight() {
-//     if(x+1 > 9) {
-//         alert('BAM !');
-//     } else if (canvas[x][y-1] === "p") {
-//         alert("C'est un parc, oh !");
-//     } else {
-//         x += 1;
-//         voiture.style.gridColumn = x;
-//     }
-//     console.log(x);
-// }
-
-function moveRight() {
-    if(position.x+1 >= canvas[position.y].length) {
-        alert("BAM !")
-    } else if (canvas[position.x][position.y] == "p") {
-        alert("PARC !!!")
+// fonctions générales
+function logPosition() {
+    console.log(`la coordonnée X vaut ${position.x}`)
+    console.log(`la coordonnée Y vaut ${position.y}`)
+    console.log(`la voiture est sur ${canvas[position.x][position.y]}`)
+}
+function checkPosition() {
+    if(canvas[position.x][position.y] === "X" || canvas[position.x][position.y] === "p") {
+        return false
     } else {
-        position.x = position.x +1;
-        voiture.style.gridColumn = position.x;
+        return true;
     }
-    console.log(position.x)
+}
+
+logPosition();
+
+// fonctions de mouvement
+function moveRight() {
+    position.y += 1;
+    if(checkPosition()) {
+        voiture.style.gridColumn = position.y;
+        logPosition();
+    } else {
+        position.y -= 1;
+        alert("ET BIM !!!");
+    }
 }
 function moveLeft() {
-    if(position.x-1 <= 0) {
-        alert("BAM !")
-    } else if (canvas[position.x-1][position.y] == "p") {
-        alert("PARC !!!")
+    position.y -= 1;
+    if(checkPosition()) {
+        voiture.style.gridColumn = position.y;
+        logPosition();
     } else {
-        position.x = position.x -1;
-        voiture.style.gridColumn = position.x;
+        position.y += 1;
+        alert("ET BIM !!!");
     }
-    console.log(position.x)
+}
+function moveBottom() {
+    position.x += 1;
+    if(checkPosition()) {
+        voiture.style.gridRow = position.x;
+        logPosition();
+    } else {
+        position.x -= 1;
+        alert("ET BIM !!!");
+    }
+}
+function moveTop() {
+    position.x -= 1;
+    if(checkPosition()) {
+        voiture.style.gridRow = position.x;
+        logPosition();
+    } else {
+        position.x += 1;
+        alert("ET BIM !!!");
+    }
 }
